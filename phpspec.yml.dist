@@ -1,0 +1,9 @@
+code_generation: true
+stop_on_failure: true  
+suites:
+    filesync_suite:
+        namespace: DLogicFileSync
+        psr4_prefix: DLogicFileSync
+        spec_prefix: 
+        src_path: %paths.config%/src/DLogicFileSync
+        spec_path: %paths.config%/spec/DLogicFileSync

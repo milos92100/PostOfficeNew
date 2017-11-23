@@ -1,0 +1,29 @@
+{
+	"name": "post-office",
+	"type": "project",
+	"version": "0.0.1",
+	"authors": [
+		
+		{
+			"name": "aca",
+			"role": "Developer"
+		},
+		{
+			"name": "milos",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": ">=7.1.0"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "6.4.*",
+		"phpspec/phpspec": "^4.0"
+	},
+	
+	"autoload": {
+		"psr-4": {
+			"PostOffice\\": "src/PostOffice"
+		}
+	}
+}
