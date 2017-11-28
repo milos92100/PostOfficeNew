@@ -1,4 +1,5 @@
 <?php
+
 namespace PostOffice\Core;
 
 /**
@@ -9,20 +10,24 @@ namespace PostOffice\Core;
  * @namespace PostOffice\Core
  *           
  */
-class Application
-{
-
-    function __construct()
-    {}
-
-    public function run()
-    {
-        
-    	if (strpos($_SERVER['REQUEST_URI'], "login") > -1){
-    		include "./web/page/login.php";
-    	}else{
-    		echo "Application is running ..";
-    	}
-    	
-    }
+class Application {
+	function __construct() {
+	}
+	public function run() {
+		if ($this->isAuthenticated ()) {
+			
+			$router = new Router ();
+			
+			$router->handleRequest ();
+		} else {
+			$this->requestAuthentication ();
+		}
+	}
+	private function isAuthenticated() {
+		return false;
+	}
+	private function requestAuthentication() {
+		$auth = new \PostOffice\Controller\AuthenticationController ();
+		$auth->index ();
+	}
 }
