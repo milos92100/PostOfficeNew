@@ -17,6 +17,12 @@ class Application
 
     public function run()
     {
-        echo "Application is running ..";
+        
+    	if (strpos($_SERVER['REQUEST_URI'], "login") > -1){
+    		include "./web/page/login.php";
+    	}else{
+    		echo "Application is running ..";
+    	}
+    	
     }
 }

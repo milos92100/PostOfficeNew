@@ -1,7 +1,9 @@
 <?php
 include "conf/conf.php";
 
-$app = new PostOffice\Core\Application();
+use PostOffice\Core\Application;
+
+$app = new Application();
 
 $app->run();
 
