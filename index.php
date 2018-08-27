@@ -16,7 +16,6 @@ $arr = [
 
 ];
 
-
 $containerBuilder = new ContainerBuilder();
 $containerBuilder->addDefinitions($arr);
 $container = $containerBuilder->build();
