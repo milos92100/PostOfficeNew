@@ -8,16 +8,16 @@ namespace PostOffice\Core;
  * @author Milos Stojanovic
  * @version 1.0
  * @namespace PostOffice\Core
- *           
+ *
  */
 class Application {
 	function __construct() {
 	}
 	public function run() {
 		if ($this->isAuthenticated ()) {
-			
+
 			$router = new Router ();
-			
+
 			$router->handleRequest ();
 		} else {
 			$this->requestAuthentication ();
