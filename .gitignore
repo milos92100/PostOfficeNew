@@ -5,3 +5,4 @@
 *.project
 *.prefs
 deployment.properties
+/.settings/org.eclipse.wst.common.project.facet.core.xml

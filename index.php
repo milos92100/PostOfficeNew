@@ -2,7 +2,7 @@
 include "conf/conf.php";
 
 use PostOffice\Core\Application;
-use PostOffice\Core\Abstraction\IHttpProvider as IHttpProvider;
+use PostOffice\Core\Abstraction\IHttpProvider;
 use PostOffice\Core\Abstraction\IRouter;
 use PostOffice\Core\Router;
 
@@ -13,7 +13,6 @@ use DI\ContainerBuilder;
 $arr = [
     IHttpProvider::class => get(PostOffice\Core\HttpProvider::class),
     IRouter::class => get(PostOffice\Core\Router::class)
-
 ];
 
 $containerBuilder = new ContainerBuilder();

@@ -26,9 +26,8 @@ class Route
     private $action;
 
     /**
-     * Constructor
      *
-     * @param Request uri path $path
+     * @param string $path
      */
     public function __construct($path)
     {
