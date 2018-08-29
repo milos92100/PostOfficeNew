@@ -1,39 +1,52 @@
-<?php declare(strict_types=1);
-
+<?php
+declare(strict_types = 1);
 namespace PostOffice\Core;
 
-use PostOffice\Core\Abstraction\IRouter;
-use PostOffice\Core\Abstraction\IHttpProvider;
+use PostOffice\Core\Abstraction\RouterInterface;
+use PostOffice\Core\Abstraction\HttpProviderInterface;
 
-class Router implements IRouter{
+/**
+ * Application router
+ *
+ * @author Aleksandar Petrovic
+ * @version 1.0
+ * @namespace PostOffice\Core
+ *           
+ */
+class Router implements RouterInterface
+{
 
     /**
      * Http provider
      *
-     * @var IHttpProvider
+     * @var HttpProviderInterface
      */
     private $httpProvider;
 
-    public function __construct(IHttpProvider $httpProvider){
+    public function __construct(HttpProviderInterface $httpProvider)
+    {
         $this->httpProvider = $httpProvider;
     }
 
-	public function handleRequest(): void {
-        //$route = new Route ( $_SERVER ['REQUEST_URI'] );
-        $route = new Route ( $this->httpProvider->getRequestUri());
+    public function handleRequest(): void
+    {
+        // $route = new Route ( $_SERVER ['REQUEST_URI'] );
+        $route = new Route($this->httpProvider->getRequestUri());
 
-		if ($route->isValid ()) {
+        if ($route->isValid()) {
 
-			$controller = $route->getController ();
-			$action = $route->getAction ();
+            $controller = $route->getController();
+            $action = $route->getAction();
 
-			$instance = new $controller ();
-			$instance->$action ();
-		} else {
-			$this->sendToPageNotFound ();
-		}
-	}
-	private function sendToPageNotFound(): void{
-		echo "Page not found: " . $this->httpProvider->getRequestUri();
-	}
+            $instance = new $controller();
+            $instance->$action();
+        } else {
+            $this->sendToPageNotFound();
+        }
+    }
+
+    private function sendToPageNotFound(): void
+    {
+        echo "Page not found: " . $this->httpProvider->getRequestUri();
+    }
 }

@@ -1,9 +1,8 @@
 <?php
-
 declare(strict_types = 1);
 namespace PostOffice\Core\Abstraction;
 
-interface IHttpProvider
+interface HttpProviderInterface
 {
 
     function getRequestUri(): string;

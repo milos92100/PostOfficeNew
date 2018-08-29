@@ -10,4 +10,8 @@ final class RouteTests extends TestCase
     {
         $this->assertEquals("1", "1");
     }
+    
+    public function testThisOneFails(){
+        $this->assertTrue(false);
+    }
 }

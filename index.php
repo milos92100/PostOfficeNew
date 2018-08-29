@@ -1,30 +1,19 @@
 <?php
-include "conf/conf.php";
-
-use PostOffice\Core\Application;
-use PostOffice\Core\Abstraction\IHttpProvider;
-use PostOffice\Core\Abstraction\IRouter;
-use PostOffice\Core\Router;
+include_once "conf/conf.php";
 
 use function DI\create;
 use function DI\get;
 use DI\ContainerBuilder;
+use PostOffice\Core\Abstraction\ApplicationInterface;
 
-$arr = [
-    IHttpProvider::class => get(PostOffice\Core\HttpProvider::class),
-    IRouter::class => get(PostOffice\Core\Router::class)
-];
+$registerConfig = include "conf/di_config.php";
 
 $containerBuilder = new ContainerBuilder();
-$containerBuilder->addDefinitions($arr);
+$containerBuilder->addDefinitions($registerConfig);
 $container = $containerBuilder->build();
 
-$router = $container->get(IRouter::class);
-$router->handleRequest();
-
-// $app = new Application();
-
-// $app->run();
+$app = $container->get(ApplicationInterface::class);
+$app->run();
 
 echo "Hello World";
 

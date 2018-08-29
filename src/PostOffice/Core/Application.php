@@ -1,5 +1,10 @@
 <?php
+declare(strict_types = 1);
 namespace PostOffice\Core;
+
+use PostOffice\Core\Abstraction\ApplicationInterface;
+use PostOffice\Core\Abstraction\RouterInterface;
+use PostOffice\Core\Abstraction\HttpProviderInterface;
 
 /**
  * Application core class
@@ -9,19 +14,30 @@ namespace PostOffice\Core;
  * @namespace PostOffice\Core
  *           
  */
-final class Application
+final class Application implements ApplicationInterface
 {
 
-    function __construct()
-    {}
+    /**
+     * Router
+     *
+     * @var HttpProviderInterface
+     */
+    private $router = null;
+
+    /**
+     * Constructor
+     *
+     * @param RouterInterface $router
+     */
+    function __construct(RouterInterface $router)
+    {
+        $this->router = $router;
+    }
 
     public function run()
     {
         if ($this->isAuthenticated()) {
-
-            $router = new Router();
-
-            $router->handleRequest();
+            $this->router->handleRequest();
         } else {
             $this->requestAuthentication();
         }
@@ -29,7 +45,7 @@ final class Application
 
     private function isAuthenticated()
     {
-        return false;
+        return true;
     }
 
     private function requestAuthentication()
