@@ -1,12 +1,15 @@
-<?php declare(strict_types=1);
+<?php
 
+declare(strict_types = 1);
 namespace PostOffice\Core;
 
-use PostOffice\Core\Abstraction\IHttpProvider;
+use PostOffice\Core\Abstraction\HttpProviderInterface;
 
-class HttpProvider implements IHttpProvider {
+class HttpProvider implements HttpProviderInterface
+{
 
-    public function getRequestUri(): string {
+    public function getRequestUri(): string
+    {
         return "testCtr/testArg";
     }
 }

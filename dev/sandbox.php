@@ -1,8 +1,7 @@
 <?php
+include __DIR__ . "./../conf/conf.php";
 
-include "../conf/conf.php";
-
-use \Firebase\JWT\JWT;
+use Firebase\JWT\JWT;
 
 $key = "example_key";
 $token = array(
@@ -14,8 +13,24 @@ $token = array(
 
 /**
  * IMPORTANT:
- * You must specify supported algorithms for your application. See
+ * You must specify supported algorithms for your application.
+ * See
  * https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40
  * for a list of spec-compliant algorithms.
  */
 $jwt = JWT::encode($token, $key);
+
+echo $jwt;
+
+$decoded = JWT::decode($jwt, $key, array(
+    'HS256'
+));
+
+print_r($decoded);
+
+/*
+ * NOTE: This will now be an object instead of an associative array. To get
+ * an associative array, you will need to cast it as such:
+ */
+
+$decoded_array = (array) $decoded;

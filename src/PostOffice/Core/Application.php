@@ -5,6 +5,8 @@ namespace PostOffice\Core;
 use PostOffice\Core\Abstraction\ApplicationInterface;
 use PostOffice\Core\Abstraction\RouterInterface;
 use PostOffice\Core\Abstraction\HttpProviderInterface;
+use Core\Http\HttpRequest;
+use PostOffice\Core\Http\Abstraction\HttpRequestInterface;
 
 /**
  * Application core class
@@ -20,16 +22,23 @@ final class Application implements ApplicationInterface
     /**
      * Router
      *
-     * @var HttpProviderInterface
+     * @var RouterInterface
      */
     private $router = null;
+
+    /**
+     * Request
+     *
+     * @var HttpRequestInterface
+     */
+    private $request = null;
 
     /**
      * Constructor
      *
      * @param RouterInterface $router
      */
-    function __construct(RouterInterface $router)
+    function __construct(RouterInterface $router, HttpRequestInterface $request)
     {
         $this->router = $router;
     }
