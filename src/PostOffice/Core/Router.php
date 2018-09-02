@@ -3,7 +3,7 @@ declare(strict_types = 1);
 namespace PostOffice\Core;
 
 use PostOffice\Core\Abstraction\RouterInterface;
-use PostOffice\Core\Abstraction\HttpProviderInterface;
+use PostOffice\Core\Http\Abstraction\HttpRequestInterface;
 
 /**
  * Application router
@@ -16,22 +16,10 @@ use PostOffice\Core\Abstraction\HttpProviderInterface;
 class Router implements RouterInterface
 {
 
-    /**
-     * Http provider
-     *
-     * @var HttpProviderInterface
-     */
-    private $httpProvider;
-
-    public function __construct(HttpProviderInterface $httpProvider)
-    {
-        $this->httpProvider = $httpProvider;
-    }
-
-    public function handleRequest(): void
+    public function handleRequest(HttpRequestInterface $request): void
     {
         // $route = new Route ( $_SERVER ['REQUEST_URI'] );
-        $route = new Route($this->httpProvider->getRequestUri());
+        $route = new Route($request->getRequestUri());
 
         if ($route->isValid()) {
 

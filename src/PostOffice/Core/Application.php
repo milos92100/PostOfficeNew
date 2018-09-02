@@ -4,9 +4,9 @@ namespace PostOffice\Core;
 
 use PostOffice\Core\Abstraction\ApplicationInterface;
 use PostOffice\Core\Abstraction\RouterInterface;
-use PostOffice\Core\Abstraction\HttpProviderInterface;
-use Core\Http\HttpRequest;
 use PostOffice\Core\Http\Abstraction\HttpRequestInterface;
+use PostOffice\Core\Abstraction\IdentityProviderInterface;
+use PostOffice\Core\Http\HttpRequest;
 
 /**
  * Application core class
@@ -34,28 +34,32 @@ final class Application implements ApplicationInterface
     private $request = null;
 
     /**
+     * Identity provider
+     *
+     * @var IdentityProviderInterface
+     */
+    private $identityProvider = null;
+
+    /**
      * Constructor
      *
      * @param RouterInterface $router
      */
-    function __construct(RouterInterface $router, HttpRequestInterface $request)
+    function __construct(RouterInterface $router)
     {
         $this->router = $router;
+        $this->request = $request;
+        $this->identityProvider = $identityProvider;
     }
 
     public function run()
     {
-        if ($this->isAuthenticated()) {
-            $this->router->handleRequest();
-        } else {
-            $this->requestAuthentication();
-        }
+        $request = new HttpRequest();
+        $this->router->handleRequest($request);
     }
 
     private function isAuthenticated()
-    {
-        return true;
-    }
+    {}
 
     private function requestAuthentication()
     {

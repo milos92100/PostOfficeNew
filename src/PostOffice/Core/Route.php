@@ -1,7 +1,10 @@
 <?php
+declare(strict_types = 1);
 namespace PostOffice\Core;
 
-class Route
+use PostOffice\Core\Abstraction\RouteInterface;
+
+class Route implements RouteInterface
 {
 
     /**
@@ -45,31 +48,21 @@ class Route
     }
 
     /**
-     * Checks if the given controller exists
      *
-     * @return boolean
+     * {@inheritdoc}
+     * @see \PostOffice\Core\Abstraction\RouteInterface::getControllerName()
      */
-    public function isValid()
-    {
-        return file_exists(__DIR__ . "/../Controller/{$this->controllerName}.php");
-    }
-
-    /**
-     * Returns the controller full name
-     *
-     * @return string
-     */
-    public function getController()
+    public function getControllerName(): string
     {
         return $this->controller;
     }
 
     /**
-     * Returns the controller function
      *
-     * @return string
+     * {@inheritdoc}
+     * @see \PostOffice\Core\Abstraction\RouteInterface::getActionName()
      */
-    public function getAction()
+    public function getActionName(): string
     {
         return $this->action;
     }
