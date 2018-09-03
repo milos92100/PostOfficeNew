@@ -4,6 +4,14 @@ namespace PostOffice\Core;
 
 use PostOffice\Core\Abstraction\RouteInterface;
 
+/**
+ * Route
+ *
+ * @author Aleksandar Petrovic
+ * @version 1.0
+ * @category Core component
+ * @namespace PostOffice\Core
+ */
 class Route implements RouteInterface
 {
 
@@ -29,22 +37,17 @@ class Route implements RouteInterface
     private $action;
 
     /**
+     * Constructor
      *
      * @param string $path
      */
-    public function __construct($path)
+    public function __construct(string $path)
     {
-        $arr = explode("/", $path);
-
-        $this->controllerName = $arr[1] . "Controller";
-
-        $this->controller = "\\PostOffice\\Controller\\" . $this->controllerName;
-
-        if (count($arr) < 3) {
-            $this->action = "index";
-        } else {
-            $this->action = $arr[2];
+        if (isEmpty($path)) {
+            throw new \InvalidArgumentException("Route path must not be empty.");
         }
+
+        $this->constructRoute($path);
     }
 
     /**
@@ -65,5 +68,20 @@ class Route implements RouteInterface
     public function getActionName(): string
     {
         return $this->action;
+    }
+
+    private function constructRoute(string $path)
+    {
+        $arr = explode("/", $path);
+
+        $this->controllerName = $arr[1] . "Controller";
+
+        $this->controller = "\\PostOffice\\Controller\\" . $this->controllerName;
+
+        if (count($arr) < 3) {
+            $this->action = "index";
+        } else {
+            $this->action = $arr[2];
+        }
     }
 }

@@ -19,5 +19,5 @@ interface ResourceValidatorInterface
      * @param RouteInterface $route
      * @return string []
      */
-    public function validateRoute(RouteInterface $route): array;
+    public function validateRoute(RouteInterface $route): ValidationResultInterface;
 }
