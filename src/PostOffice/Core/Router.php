@@ -4,7 +4,10 @@ namespace PostOffice\Core;
 
 use PostOffice\Core\Abstraction\RouterInterface;
 use PostOffice\Core\Http\Abstraction\HttpRequestInterface;
+use PostOffice\Core\Http\Abstraction\HttpResponseInterface;
 use PostOffice\Core\Abstraction\ResourceValidatorInterface;
+use PostOffice\Core\Http\HttpResult;
+use PostOffice\Core\Http\JsonHttpResponse;
 
 /**
  * Application router
@@ -39,20 +42,26 @@ final class Router implements RouterInterface
             $action = $route->getAction();
 
             $instance = new $controller();
-            $instance->$action();
+            $response = $instance->$action($request);
+            $this->dispatch($response);
         } else {
             $this->handleInvalidRequest($request, $validationReult->getErrors());
         }
     }
 
+    private function dispatch(HttpResponseInterface $response)
+    {
+        $response->send();
+    }
+
     private function handleInvalidRequest(HttpRequestInterface $request, array $errors)
     {
         if ($request->isAjax()) {
-            echo json_encode(array(
-                "success" => false,
-                "data" => null,
-                "errors" => $errors
-            ));
+            $response = new JsonHttpResponse();
+
+            $response->setContent(HttpResult::Error($errors));
+
+            $this->dispatch($response);
         } else {
             $this->sendToPageNotFound();
         }
@@ -60,6 +69,6 @@ final class Router implements RouterInterface
 
     private function sendToPageNotFound(): void
     {
-        echo "Page not found: " . $this->httpProvider->getRequestUri();
+        echo "Page not found: ";
     }
 }

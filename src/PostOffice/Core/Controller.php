@@ -2,8 +2,17 @@
 declare(strict_types = 1);
 namespace PostOffice\Core;
 
+use PostOffice\Core\Abstraction\IdentityProviderInterface;
+
 abstract class Controller
 {
+
+    protected $identityProvider = null;
+
+    public function __construct(IdentityProviderInterface $identityPovider)
+    {
+        $this->identityProvider = $identityPovider;
+    }
 
     protected function loadPage(string $page): void
     {
