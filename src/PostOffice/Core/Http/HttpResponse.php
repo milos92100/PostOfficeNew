@@ -90,4 +90,31 @@ class HttpResponse implements HttpResponseInterface
             header("{$key}: {$value}");
         }
     }
+
+    /**
+     *
+     * @return number
+     */
+    public final function getStatusCode()
+    {
+        return $this->statusCode;
+    }
+
+    /**
+     *
+     * @return array
+     */
+    public final function getHeaders()
+    {
+        return $this->headers;
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public final function getContent()
+    {
+        return $this->content;
+    }
 }
