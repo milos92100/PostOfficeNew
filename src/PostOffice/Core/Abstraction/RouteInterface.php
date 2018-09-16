@@ -27,4 +27,11 @@ interface RouteInterface
      * @return string
      */
     public function getActionName(): string;
+
+    /**
+     * Indicates that the action of the route is defined
+     *
+     * @return bool
+     */
+    public function isActionDefined(): bool;
 }

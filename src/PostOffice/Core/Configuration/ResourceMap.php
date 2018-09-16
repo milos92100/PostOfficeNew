@@ -15,7 +15,7 @@ use PostOffice\Common\Collection;
 final class ResourceMap extends Collection
 {
 
-    public static $CONTROLLERS = "CONTROLLERS";
+    public const CONTROLLERS = "CONTROLLERS";
 
     public function __construct($items = array())
     {

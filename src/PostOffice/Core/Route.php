@@ -3,6 +3,8 @@ declare(strict_types = 1);
 namespace PostOffice\Core;
 
 use PostOffice\Core\Abstraction\RouteInterface;
+use PostOffice\Core\Exception\RoutePathEmptyException;
+use PostOffice\Core\Exception\ArgumentIsNullException;
 
 /**
  * Route
@@ -37,14 +39,21 @@ class Route implements RouteInterface
     private $action;
 
     /**
+     * Action is defined
+     *
+     * @var boolean
+     */
+    private $actionIsDefined = false;
+
+    /**
      * Constructor
      *
      * @param string $path
      */
     public function __construct(string $path)
     {
-        if (isEmpty($path)) {
-            throw new \InvalidArgumentException("Route path must not be empty.");
+        if (null == $path) {
+            throw new ArgumentIsNullException("path");
         }
 
         $this->constructRoute($path);
@@ -70,18 +79,38 @@ class Route implements RouteInterface
         return $this->action;
     }
 
-    private function constructRoute(string $path)
+    /**
+     *
+     * {@inheritdoc}
+     * @see \PostOffice\Core\Abstraction\RouteInterface::isActionDefined()
+     */
+    public function isActionDefined(): bool
     {
-        $arr = explode("/", $path);
+        return $this->actionIsDefined;
+    }
 
-        $this->controllerName = $arr[1] . "Controller";
+    private function setAction($args)
+    {
+        $this->controllerName = $args[1] . "Controller";
 
         $this->controller = "\\PostOffice\\Controller\\" . $this->controllerName;
 
-        if (count($arr) < 3) {
+        if (count($args) < 3) {
             $this->action = "index";
         } else {
-            $this->action = $arr[2];
+            $this->action = $args[2];
         }
+    }
+
+    private function constructRoute(string $path)
+    {
+        $routeArgs = explode("/", $path);
+
+        if (count($routeArgs) < 1) {
+            $this->actionIsDefined = false;
+            return;
+        }
+
+        $this->setAction($routeArgs);
     }
 }

@@ -58,6 +58,16 @@ class HttpResponse implements HttpResponseInterface
     }
 
     /**
+     * Sets the status code
+     *
+     * @param int $statusCode
+     */
+    public function setStatusCode(int $statusCode)
+    {
+        $this->statusCode = $statusCode;
+    }
+
+    /**
      * Adds response header
      *
      * @param string $name
