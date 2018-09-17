@@ -14,6 +14,7 @@ use PostOffice\Controller\AuthenticationController;
 use PostOffice\Core\Abstraction\IdentityProviderInterface;
 use PostOffice\Controller\HomeController;
 use DI\Container;
+use PostOffice\Core\Exception\ComponentNotRegisteredException;
 
 /**
  * Application router
@@ -41,13 +42,17 @@ final class Router implements RouterInterface
      */
     public function __construct(Container $container)
     {
+        if (null == $container) {
+            throw new ArgumentIsNullException(Container::class);
+        }
+
         $validator = $container->get(ResourceValidatorInterface::class);
         $identityProvider = $container->get(IdentityProviderInterface::class);
 
         if ($validator) {
-            throw new ArgumentIsNullException(ResourceValidatorInterface::class);
+            throw new ComponentNotRegisteredException(ResourceValidatorInterface::class);
         } else if ($identityProvider) {
-            throw new ArgumentIsNullException(IdentityProviderInterface::class);
+            throw new ComponentNotRegisteredException(IdentityProviderInterface::class);
         }
 
         $this->validator = $validator;
@@ -67,17 +72,24 @@ final class Router implements RouterInterface
 
         if ($validationReult->isValid()) {
 
-            $controller = $route->getController();
-            $action = $route->getAction();
+            $controller = $this->container->get($route->getControllerName());
+            if (null == $controller) {
+                throw new ComponentNotRegisteredException($route->getControllerName());
+            }
 
-            $instance = new $controller($this->identityProvider);
-            $response = $instance->$action($request);
+            $action = $route->getAction();
+            $response = $controller->$action($request);
             $this->dispatch($response);
         } else {
             $this->handleInvalidRequest($request, $validationReult->getErrors());
         }
     }
 
+    /**
+     * Handles the request when the action is not defined
+     *
+     * @param HttpRequestInterface $request
+     */
     private function handelUndefinedAction(HttpRequestInterface $request)
     {
         if ($this->isAuthorized()) {
@@ -87,7 +99,12 @@ final class Router implements RouterInterface
         }
     }
 
-    private function notAuthorized(HttpRequestInterface $request)
+    /**
+     * Creates and dispatches the not outhorized response
+     *
+     * @param HttpRequestInterface $request
+     */
+    private function notAuthorized(HttpRequestInterface $request): void
     {
         if ($request->isAjax()) {
             $response = new JsonHttpResponse();
@@ -108,11 +125,17 @@ final class Router implements RouterInterface
         return true;
     }
 
-    private function dispatch(HttpResponseInterface $response)
+    private function dispatch(HttpResponseInterface $response): void
     {
         $response->send();
     }
 
+    /**
+     * Handles the request if its not valid
+     *
+     * @param HttpRequestInterface $request
+     * @param array $errors
+     */
     private function handleInvalidRequest(HttpRequestInterface $request, array $errors)
     {
         if ($request->isAjax()) {

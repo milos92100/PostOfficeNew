@@ -6,6 +6,8 @@ use PostOffice\Core\Controller;
 use PostOffice\Core\Http\Abstraction\HttpRequestInterface;
 use PostOffice\Core\Http\JsonHttpResponse;
 use PostOffice\Core\Http\HttpResult;
+use PostOffice\Core\Http\HttpRequest;
+use PostOffice\Core\Http\HttpResponse;
 
 /**
  * AuthenticationController
@@ -18,9 +20,17 @@ use PostOffice\Core\Http\HttpResult;
 class AuthenticationController extends Controller
 {
 
-    public function index(HttpRequestInterface $request)
+    /**
+     * Dispalayes the index page
+     *
+     * @param HttpRequestInterface $request
+     * @return HttpRequest
+     */
+    public function index(HttpRequestInterface $request): HttpRequest
     {
-        $this->loadPage("login");
+        $response = new HttpResponse();
+        $response->setContent($this->templateManager->render("login", array()));
+        return $response;
     }
 
     public function login(HttpRequestInterface $request): JsonHttpResponse

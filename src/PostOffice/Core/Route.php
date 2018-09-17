@@ -3,7 +3,6 @@ declare(strict_types = 1);
 namespace PostOffice\Core;
 
 use PostOffice\Core\Abstraction\RouteInterface;
-use PostOffice\Core\Exception\RoutePathEmptyException;
 use PostOffice\Core\Exception\ArgumentIsNullException;
 
 /**
