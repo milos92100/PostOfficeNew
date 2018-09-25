@@ -4,7 +4,7 @@ namespace PostOffice\Core;
 
 use PostOffice\Core\Abstraction\ResourceValidatorInterface;
 use PostOffice\Core\Abstraction\RouteInterface;
-use PostOffice\Configuration\ResourceMap;
+use PostOffice\Core\Configuration\ResourceMap;
 
 /**
  * ResourceValidator

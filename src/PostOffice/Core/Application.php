@@ -48,10 +48,10 @@ final class Application implements ApplicationInterface
      */
     function __construct(Container $container)
     {
-        $this->router = $router;
+        $this->router = $container->get(RouterInterface::class);
     }
 
-    public function run()
+    public function run(): void
     {
         $request = new HttpRequest();
         $this->router->handleRequest($request);

@@ -4,6 +4,7 @@ namespace PostOffice\Controller;
 
 use PostOffice\Core\Controller;
 use PostOffice\Core\Http\Abstraction\HttpRequestInterface;
+use PostOffice\Core\Http\HttpResponse;
 
 /**
  * HomeController
@@ -19,6 +20,8 @@ class HomeController extends Controller
 
     public function index(HttpRequestInterface $request)
     {
-        $this->loadPage("index");
+        $response = new HttpResponse();
+        $response->setContent($this->templateManager->render("home"), array());
+        return $response;
     }
 }

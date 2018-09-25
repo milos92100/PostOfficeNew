@@ -4,6 +4,11 @@ namespace PostOffice\Core;
 
 use PostOffice\Core\Abstraction\TemplateManagerInterface;
 
+/**
+ *
+ * @author Aleksandar Petrovic
+ *        
+ */
 final class TwigTemplateManager implements TemplateManagerInterface
 {
 

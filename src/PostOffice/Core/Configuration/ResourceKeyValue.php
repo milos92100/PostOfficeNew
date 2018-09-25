@@ -1,6 +1,6 @@
 <?php
 declare(strict_types = 1);
-namespace PostOffice\Configuration;
+namespace PostOffice\Core\Configuration;
 
 /**
  * ResourceKeyValue
@@ -36,11 +36,11 @@ final class ResourceKeyValue
      */
     public function __construct(string $key, string $value)
     {
-        if (isEmpty($key)) {
+        if (empty($key)) {
             throw new \InvalidArgumentException();
         }
 
-        if (isEmpty($value)) {
+        if (empty($value)) {
             throw new \InvalidArgumentException();
         }
 

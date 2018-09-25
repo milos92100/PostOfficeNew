@@ -1,6 +1,6 @@
 <?php
 declare(strict_types = 1);
-namespace PostOffice\Configuration;
+namespace PostOffice\Core\Configuration;
 
 use PostOffice\Common\Collection;
 
