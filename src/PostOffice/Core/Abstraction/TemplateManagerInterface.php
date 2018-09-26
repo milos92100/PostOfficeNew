@@ -5,5 +5,5 @@ namespace PostOffice\Core\Abstraction;
 interface TemplateManagerInterface
 {
 
-    public function render(string $page, array $args = array()): string;
+    public function render(string $page, array $args): string;
 }

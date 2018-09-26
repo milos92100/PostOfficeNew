@@ -49,9 +49,9 @@ final class Router implements RouterInterface
         $validator = $container->get(ResourceValidatorInterface::class);
         $identityProvider = $container->get(IdentityProviderInterface::class);
 
-        if ($validator) {
+        if (null == $validator) {
             throw new ComponentNotRegisteredException(ResourceValidatorInterface::class);
-        } else if ($identityProvider) {
+        } else if (null == $identityProvider) {
             throw new ComponentNotRegisteredException(IdentityProviderInterface::class);
         }
 
@@ -63,7 +63,8 @@ final class Router implements RouterInterface
     public function handleRequest(HttpRequestInterface $request): void
     {
         $route = new Route($request->getRequestUri());
-        if ($route->isActionDefined()) {
+
+        if (false == $route->isActionDefined()) {
             $this->handelUndefinedAction($request);
             return;
         }
@@ -152,7 +153,8 @@ final class Router implements RouterInterface
     private function sendToHomePage(HttpRequestInterface $request)
     {
         $auth = $this->container->get(HomeController::class);
-        $auth->index($request);
+        $response = $auth->index($request);
+        $response->send();
     }
 
     private function sendToPageNotFound(): void

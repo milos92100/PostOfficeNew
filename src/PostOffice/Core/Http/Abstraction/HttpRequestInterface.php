@@ -57,7 +57,7 @@ interface HttpRequestInterface
      * @param string $name
      * @return bool
      */
-    public function hasPost($name): bool;
+    public function hasPost(string $name): bool;
 
     /**
      * Checks if the given GET variable exists.
@@ -65,7 +65,7 @@ interface HttpRequestInterface
      * @param string $name
      * @return bool
      */
-    public function hasQuery($name): bool;
+    public function hasQuery(string $name): bool;
 
     /**
      * Returns the http request uri
@@ -79,5 +79,5 @@ interface HttpRequestInterface
      *
      * @return string
      */
-    public function isAjax(): string;
+    public function isAjax(): bool;
 }

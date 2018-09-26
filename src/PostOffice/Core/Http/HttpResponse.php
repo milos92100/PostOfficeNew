@@ -88,7 +88,7 @@ class HttpResponse implements HttpResponseInterface
         ob_clean();
         $this->applyHeaders();
         http_response_code($this->statusCode);
-        echo $this->contento;
+        echo $this->content;
     }
 
     /**

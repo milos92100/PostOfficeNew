@@ -11,6 +11,7 @@ $containerBuilder->addDefinitions($registerConfig);
 $container = $containerBuilder->build();
 
 $app = new Application($container);
+
 $app->run();
 
 echo "Hello World";

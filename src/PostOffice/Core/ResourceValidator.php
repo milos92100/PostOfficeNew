@@ -4,6 +4,7 @@ namespace PostOffice\Core;
 
 use PostOffice\Core\Abstraction\ResourceValidatorInterface;
 use PostOffice\Core\Abstraction\RouteInterface;
+use PostOffice\Core\Abstraction\ValidationResultInterface;
 use PostOffice\Core\Configuration\ResourceMap;
 
 /**
@@ -40,7 +41,7 @@ class ResourceValidator implements ResourceValidatorInterface
      * {@inheritdoc}
      * @see \PostOffice\Core\Abstraction\ResourceValidatorInterface::validateRoute()
      */
-    public function validateRoute(RouteInterface $route): array
+    public function validateRoute(RouteInterface $route): ValidationResultInterface
     {
         $errors = array();
 
@@ -52,7 +53,7 @@ class ResourceValidator implements ResourceValidatorInterface
             $errors[] = "Action {$route->getActionName()} does not exists";
         }
 
-        return $errors;
+        return new ResourceValidationResult(empty($errors), $errors);
     }
 
     /**
@@ -74,6 +75,6 @@ class ResourceValidator implements ResourceValidatorInterface
      */
     private function controllerExists($name)
     {
-        return file_exists("{$this->resourceMap->get(ResourceMap::$CONTROLLERS)}/{$this->controllerName}.php");
+        return file_exists("{$this->resourceMap->get(ResourceMap::CONTROLLERS)->getValue()}/{$name}.php");
     }
 }

@@ -13,7 +13,7 @@ use PostOffice\Core\Abstraction\ValidationResultInterface;
  * @category Core component
  * @namespace PostOffice\Core
  */
-final class ResourceValidatonResult extends AbstractValidationResult implements ValidationResultInterface
+final class ResourceValidationResult extends AbstractValidationResult implements ValidationResultInterface
 {
 
     /**

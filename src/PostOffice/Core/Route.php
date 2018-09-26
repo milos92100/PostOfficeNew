@@ -17,13 +17,6 @@ class Route implements RouteInterface
 {
 
     /**
-     * Controller name
-     *
-     * @var string
-     */
-    private $controllerName;
-
-    /**
      * Full namespace with name
      *
      * @var string
@@ -90,25 +83,30 @@ class Route implements RouteInterface
 
     private function setAction($args)
     {
-        $this->controllerName = $args[1] . "Controller";
+        $this->controller = $args[0] . "Controller";
 
-        $this->controller = "\\PostOffice\\Controller\\" . $this->controllerName;
-
-        if (count($args) < 3) {
+        if (count($args) < 2) {
             $this->action = "index";
         } else {
-            $this->action = $args[2];
+            $this->action = $args[1];
         }
     }
 
     private function constructRoute(string $path)
     {
-        $routeArgs = explode("/", $path);
+        $routeArgs = array_filter(explode("/", trim($path)), function ($value) {
+            return $value !== '';
+        });
+
+        // reindex
+        $routeArgs = array_values($routeArgs);
 
         if (count($routeArgs) < 1) {
             $this->actionIsDefined = false;
             return;
         }
+
+        $this->actionIsDefined = true;
 
         $this->setAction($routeArgs);
     }

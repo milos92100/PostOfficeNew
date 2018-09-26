@@ -6,7 +6,6 @@ use DI\Container;
 use PostOffice\Core\Abstraction\ApplicationInterface;
 use PostOffice\Core\Abstraction\RouterInterface;
 use PostOffice\Core\Http\Abstraction\HttpRequestInterface;
-use PostOffice\Core\Abstraction\IdentityProviderInterface;
 use PostOffice\Core\Http\HttpRequest;
 
 /**
@@ -35,20 +34,13 @@ final class Application implements ApplicationInterface
     private $request = null;
 
     /**
-     * Identity provider
-     *
-     * @var IdentityProviderInterface
-     */
-    private $identityProvider = null;
-
-    /**
      * Constructor
      *
      * @param RouterInterface $router
      */
     function __construct(Container $container)
     {
-        $this->router = $container->get(RouterInterface::class);
+        $this->router = new Router($container);
     }
 
     public function run(): void

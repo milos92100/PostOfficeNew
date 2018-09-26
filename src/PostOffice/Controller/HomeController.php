@@ -5,6 +5,7 @@ namespace PostOffice\Controller;
 use PostOffice\Core\Controller;
 use PostOffice\Core\Http\Abstraction\HttpRequestInterface;
 use PostOffice\Core\Http\HttpResponse;
+use PostOffice\Core\Http\Abstraction\HttpResponseInterface;
 
 /**
  * HomeController
@@ -18,10 +19,13 @@ use PostOffice\Core\Http\HttpResponse;
 class HomeController extends Controller
 {
 
-    public function index(HttpRequestInterface $request)
+    public function index(HttpRequestInterface $request): HttpResponseInterface
     {
         $response = new HttpResponse();
-        $response->setContent($this->templateManager->render("home"), array());
+        $response->setContent($this->templateManager->render("home.html.twig", array(
+            "title" => "Home",
+            "welcome" => "Home Page"
+        )));
         return $response;
     }
 }

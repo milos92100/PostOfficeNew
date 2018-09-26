@@ -20,7 +20,7 @@ final class HttpRequest implements HttpRequestInterface
      * {@inheritdoc}
      * @see \PostOffice\Core\Http\Abstraction\HttpRequestInterface::getRequestUri()
      */
-    public function getRequestUri()
+    public function getRequestUri(): string
     {
         return $_SERVER['REQUEST_URI'];
     }
@@ -30,7 +30,7 @@ final class HttpRequest implements HttpRequestInterface
      * {@inheritdoc}
      * @see \PostOffice\Core\Http\Abstraction\HttpRequestInterface::getPost()
      */
-    public function getPost($name, $default = null)
+    public function getPost(string $name, $default = null)
     {
         return $this->get($_POST, $name, $default);
     }
@@ -40,7 +40,7 @@ final class HttpRequest implements HttpRequestInterface
      * {@inheritdoc}
      * @see \PostOffice\Core\Http\Abstraction\HttpRequestInterface::hasHeader()
      */
-    public function hasHeader($name): bool
+    public function hasHeader(string $name): bool
     {
         return $this->has($_SERVER, $name);
     }
@@ -50,7 +50,7 @@ final class HttpRequest implements HttpRequestInterface
      * {@inheritdoc}
      * @see \PostOffice\Core\Http\Abstraction\HttpRequestInterface::hasPost()
      */
-    public function hasPost($name): bool
+    public function hasPost(string $name): bool
     {
         return $this->has($_POST, $name);
     }
@@ -60,7 +60,7 @@ final class HttpRequest implements HttpRequestInterface
      * {@inheritdoc}
      * @see \PostOffice\Core\Http\Abstraction\HttpRequestInterface::getQuery()
      */
-    public function getQuery($name, $default = null)
+    public function getQuery(string $name, $default = null)
     {
         return $this->get($_GET, $name, $default);
     }
@@ -70,7 +70,7 @@ final class HttpRequest implements HttpRequestInterface
      * {@inheritdoc}
      * @see \PostOffice\Core\Http\Abstraction\HttpRequestInterface::hasQuery()
      */
-    public function hasQuery($name)
+    public function hasQuery(string $name): bool
     {
         return $this->has($_GET, $name);
     }
@@ -80,7 +80,7 @@ final class HttpRequest implements HttpRequestInterface
      * {@inheritdoc}
      * @see \PostOffice\Core\Http\Abstraction\HttpRequestInterface::getHeader()
      */
-    public function getHeader($name, $defualt = null)
+    public function getHeader(string $name, $defualt = null)
     {
         return $this->get($_SERVER, $name, $defualt);
     }
